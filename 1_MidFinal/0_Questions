@@ -1,1 +1,27 @@
-
+EXERCISE 01: (40 points)
+By using the cursor with parameter and the loop : Loop, type a PL/SQL program that displays the
+employees (last name, salary, hire date and job title) who earn a salary less or equal to a given salary.
+Display also at the end of the report, the sum and the average of the corresponding salaries (see the
+report below)
+Example :
+Enter a salary: ………….
+Last NameHire date Job title Salary
+.….. ………. .…….. ……..
+Sum salary : ……
+Avg salary : ……
+Note
+- use the function to_char to display the salary with the format : DD-MONTH-YYYY
+- Tables to use : EMPLOYEE and JOB.
+- Handle usual execeptions if necessary
+EXERCISE 02: (60 points)
+Q1) Create the stored function empSalesPerson. This function has the parameter (IN)
+customer id and returns the employee last name who is sales person of given customer
+.
+Q2) Type a plsql test program that asks to enter a customer id and returns the following
+message :
+The employee ……. Is the sales person of the customer …….
+If the customer doesn’t exist display : The customer with the id : ….. doesn’t exists
+Example
+Enter customer id : 100
+The employee : (7844,TURNER) Is the sales person of the customer: 100,JOCKSPORTS
+Note : use the tables EMPLOYEE and CUSTOMER
