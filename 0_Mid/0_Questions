@@ -1,0 +1,26 @@
+EXERCISE 1:
+Suppose the following sql statement
+SELECT JOB_ID, MAX(SALARY)
+FROM EMPLOYEE
+GROUP BY JOB_ID
+Q1) Type a plsql program that displays the corresponding the result of the previous sql query
+
+Q2) Make a change to the code in Q11) in order to display job id, job title, max and min salary
+
+EXERCISE 2
+By using the table customer, the attribute %type and case statement, type a PL/SQL program that
+asks to enter
+- Customer id
+And display the following
+- Customer id
+- Name
+- Address,
+- City
+- Credit limit
+- New credit limit
+The new credit limit is calculated according to the following sheet
+Area code New credit limit
+<=400 +4%
+>400 and <=600 -3%
+>600 +2%
+When the customer not in the table , display the message : the customer you entered : …. doesn’ texist
