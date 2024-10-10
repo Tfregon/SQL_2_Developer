@@ -1,0 +1,47 @@
+--EXERCISE 01
+SET SERVEROUTPUT ON
+SET VERIFY OFF
+ACCEPT S_SALARY NUMBER PROMPT 'Enter a SALARY: '
+
+DECLARE
+    CURSOR C_EMP(P_SALARY IN NUMBER) IS
+    SELECT E.LAST_NAME, E.SALARY, E.HIRE_DATE, J.FUNCTION
+    FROM EMPLOYEE E
+    JOIN JOB J USING (JOB_ID)
+    WHERE E.SALARY <= P_SALARY;
+    
+    V_LASTNAME      EMPLOYEE.LAST_NAME%TYPE;
+    V_SAL           EMPLOYEE.SALARY%TYPE;
+    V_HIRE_DATE     EMPLOYEE.HIRE_DATE%TYPE;
+    V_JOBTITLE      JOB.FUNCTION%TYPE;
+    V_SUM_SALARY    NUMBER:= 0;
+    V_COUNT         NUMBER:= 0;
+    V_AVG_SALARY    NUMBER:= 0;
+
+BEGIN
+    OPEN C_EMP(&S_SALARY);
+    DBMS_OUTPUT.PUT_LINE('========================================================================');
+    DBMS_OUTPUT.PUT_LINE('LAST NAME          HIRE DATE                 JOB TITLE           SALARY');
+    DBMS_OUTPUT.PUT_LINE('========================================================================');
+    LOOP
+        FETCH C_EMP INTO V_LASTNAME, V_SAL, V_HIRE_DATE, V_JOBTITLE;
+        EXIT WHEN C_EMP%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE(RPAD(V_LASTNAME, 20, ' ')
+                            || RPAD(TO_CHAR(V_HIRE_DATE, 'DD-MONTH-YYYY'), 25, ' ')
+                            || RPAD(V_JOBTITLE, 20, ' ')
+                            || RPAD(TO_CHAR(V_SAL, '9999999'), 15, ' '));
+        V_SUM_SALARY := V_SUM_SALARY + V_SAL;
+        V_COUNT := V_COUNT +1;
+    END LOOP;
+    CLOSE C_EMP;
+    
+    V_AVG_SALARY := V_SUM_SALARY/V_COUNT;
+     DBMS_OUTPUT.PUT_LINE('Sum salary: '||RPAD(TO_CHAR(V_SUM_SALARY), 20, ' '));
+     DBMS_OUTPUT.PUT_LINE('Avg salary: '||RPAD(TO_CHAR(V_AVG_SALARY), 25, ' '));
+    
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('No data found: ' || &S_SALARY||' doesn''t exist'); 
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('An error occurred: ' || SQLERRM); 
+END;
